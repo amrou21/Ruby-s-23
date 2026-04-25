@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruby's Love Story 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+body, html {
+    margin:0;
+    padding:0;
+    height:100%;
+    font-family:'Cairo', sans-serif;
+    overflow:hidden;
+    background:black;
+}
+
+/* Background cinematic zoom */
+.game-container {
+    height:100vh;
+    width:100vw;
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    animation: zoom 20s infinite alternate ease-in-out;
+}
+
+@keyframes zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+/* Dark cinematic overlay */
+.overlay {
+    background: linear-gradient(transparent, rgba(0,0,0,0.95));
+    padding:30px 20px;
+    text-align:center;
+}
+
+/* Dialogue with glow */
+.dialogue-box {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    border: 2px solid #ff4d6d;
+    border-radius:20px;
+    padding:20px;
+    color:white;
+    font-size:1.2rem;
+    margin-bottom:20px;
+    min-height:90px;
+    box-shadow: 0 0 20px rgba(255,77,109,0.4);
+}
+
+/* Buttons */
+.choice-btn {
+    background: linear-gradient(45deg, #ff4d6d, #ff758f);
+    color:white;
+    padding:15px;
+    border-radius:50px;
+    border:none;
+    font-weight:900;
+    font-size:1rem;
+    cursor:pointer;
+    transition:0.25s;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.choice-btn:hover {
+    transform: scale(1.08);
+    box-shadow:0 0 20px #ff4d6d;
+}
+
+/* Input */
+input {
+    padding:15px;
+    border-radius:25px;
+    border:none;
+    width:80%;
+    margin-bottom:10px;
+    text-align:center;
+    font-size:1.1rem;
+}
+
+/* Floating hearts */
+.heart {
+    position:fixed;
+    bottom:0;
+    font-size:20px;
+    animation: floatUp 5s linear forwards;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-100vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game-container" id="bg" style="background-image:url('scene1.jpg')">
+<div class="overlay">
+
+<div class="dialogue-box" id="text"></div>
+
+<div id="buttons">
+<button class="choice-btn" onclick="scene2()">Eh ya 3asal, etfadel?</button>
+</div>
+
+</div>
+</div>
+
+<script>
+const realNumber = '9055193263';
+
+const text = document.getElementById("text");
+const buttons = document.getElementById("buttons");
+const bg = document.getElementById("bg");
+
+/* Typing effect */
+function typeText(msg) {
+    text.innerHTML = "";
+    let i = 0;
+    let speed = 30;
+
+    function typing() {
+        if (i < msg.length) {
+            text.innerHTML += msg.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        }
+    }
+    typing();
+}
+
+/* Floating hearts */
+function hearts() {
+    setInterval(() => {
+        let h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "💖";
+        h.style.left = Math.random()*100 + "vw";
+        document.body.appendChild(h);
+
+        setTimeout(() => h.remove(), 5000);
+    }, 300);
+}
+
+/* Scene 1 */
+typeText("Ya saba7 el toot, ya hlw ya cute 😍");
+
+/* Scene 2 */
+function scene2() {
+    bg.style.backgroundImage = "url('scene2.jpg')";
+    typeText("La2 ba2a... deh t5oseeny 😤🔥 Ma7adesh y2dar ykalmha!");
+
+    buttons.innerHTML = `<button class="choice-btn" onclick="scene3()">Yalla bina</button>`;
+}
+
+/* Scene 3 */
+function scene3() {
+    bg.style.backgroundImage = "url('scene3.jpg')";
+    typeText("Tegi nro7 felucca 30 April ya 3asal? 👀");
+
+    buttons.innerHTML = `
+        <button class="choice-btn" onclick="yes()">Yes 💖</button>
+        <button class="choice-btn" onclick="no()">No 😒</button>
+    `;
+}
+
+/* No button troll */
+function no() {
+    typeText("La2 ya benti 😭 doosi Yes bas");
+}
+
+/* Yes */
+function yes() {
+    bg.style.backgroundImage = "url('scene4.jpg')";
+    typeText("Na2so rakamek ya 3asal 😉");
+
+    buttons.innerHTML = `
+        <input id="num" placeholder="01xxxxxxxxx">
+        <button class="choice-btn" onclick="check()">Done</button>
+    `;
+}
+
+/* Final */
+function check() {
+    let val = document.getElementById("num").value;
+
+    if (val.trim() === realNumber) {
+        bg.style.backgroundImage = "url('scene5.jpg')";
+        typeText("HAPPY BIRTHDAY YA ROBAAAA 🎂🔥 I LOVE YOU 💖");
+
+        buttons.innerHTML = "";
+        hearts(); // start heart animation
+    } else {
+        alert("Wrong number ya nasaba 😂");
+    }
+}
+</script>
+
+</body>
+</html>
